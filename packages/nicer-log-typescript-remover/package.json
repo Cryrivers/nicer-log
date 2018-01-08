@@ -1,0 +1,37 @@
+{
+  "name": "nicer-log-typescript-remover",
+  "version": "0.0.6",
+  "description": "TypeScript transformer for stripping nicer-log",
+  "main": "dist/commonjs/src/index.js",
+  "module": "dist/modules/src/index.js",
+  "types": "dist/types/src/index.d.ts",
+  "ember-addon": {
+    "main": "ember-addon.js"
+  },
+  "keywords": [
+    "ember-addon"
+  ],
+  "scripts": {
+    "problems": "node ./scripts/problems.js",
+    "preversion": "npm run test",
+    "prepack": "ember build -prod",
+    "build": "ember build -prod",
+    "build-tests": "ember build",
+    "pretest": "npm run problems",
+    "test": "ember test",
+    "tdd": "ember test --server",
+    "format": "prettier --parser typescript './src/**/*.{ts,tsx}' --write"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/qunit": "^2.0.31",
+    "ember-cli": "^2.18.0",
+    "libkit": "^0.5.18",
+    "prettier": "^1.9.2",
+    "qunitjs": "^2.4.1",
+    "shelljs": "^0.7.8",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {}
+}
