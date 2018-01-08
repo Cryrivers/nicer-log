@@ -23,7 +23,12 @@
     "format": "prettier --parser typescript './src/**/*.{ts,tsx}' --write"
   },
   "author": {
-    "name": "Wang Zhongliang"
+    "name": "Wang Zhongliang",
+    "url": "https://github.com/Cryrivers"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cryrivers/nicer-log"
   },
   "license": "MIT",
   "devDependencies": {

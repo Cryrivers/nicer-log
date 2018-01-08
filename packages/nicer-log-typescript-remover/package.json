@@ -1,7 +1,7 @@
 {
   "name": "nicer-log-typescript-remover",
   "version": "0.0.6",
-  "description": "TypeScript transformer for stripping nicer-log",
+  "description": "A TypeScript transformer to remove usages of nicer-log in production build.",
   "main": "dist/commonjs/src/index.js",
   "module": "dist/modules/src/index.js",
   "types": "dist/types/src/index.d.ts",
@@ -21,6 +21,14 @@
     "test": "ember test",
     "tdd": "ember test --server",
     "format": "prettier --parser typescript './src/**/*.{ts,tsx}' --write"
+  },
+  "author": {
+    "name": "Wang Zhongliang",
+    "url": "https://github.com/Cryrivers"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cryrivers/nicer-log"
   },
   "license": "MIT",
   "devDependencies": {
