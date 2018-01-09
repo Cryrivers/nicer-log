@@ -108,7 +108,16 @@ function hashString(str: string): number {
   }
 }
 
-export default function nicerLog(groupName: string): typeof console.log {
+export interface NicerLog {
+  /**
+   * @description
+   * Blablabla
+   */
+  (message?: any, ...optionalParams: any[]): void;
+  async(label: string, promise: Promise<any>): void;
+}
+
+export default function nicerLog(groupName: string): NicerLog {
   let currentColor: ColorPalette;
   if (!groupColorMap[groupName]) {
     const chosenColor = PALETTE[hashString(groupName) % PALETTE_LENGTH];
@@ -116,10 +125,41 @@ export default function nicerLog(groupName: string): typeof console.log {
   } else {
     currentColor = groupColorMap[groupName];
   }
+  const groupNameFormat = `%c[%c${groupName}%c]`;
   const bracketStyle = `color: ${currentColor.backgroundColor}; background: ${
     currentColor.backgroundColor
   }; padding: 2px 0;`;
   const textStyle = `color: ${currentColor.textColor}; background: ${currentColor.backgroundColor}; padding: 2px 0;`;
+  const groupLabelStyle = [bracketStyle, textStyle, bracketStyle];
+  const _nicerLog = console.log.bind(console, groupNameFormat, ...groupLabelStyle);
 
-  return console.log.bind(console, `%c[%c${groupName}%c]`, bracketStyle, textStyle, bracketStyle);
+  _nicerLog.async = (label: string, promise: Promise<any>) => {
+    console.log(
+      `${groupNameFormat}%c${label}%cPENDING`,
+      ...groupLabelStyle,
+      `color: ${currentColor.backgroundColor};`,
+      `color: blue;`
+    );
+    promise
+      .then(ret =>
+        console.log(
+          `${groupNameFormat}%c${label}%cFULFILLED`,
+          ...groupLabelStyle,
+          `color:${currentColor.backgroundColor};`,
+          'color: green;',
+          ret
+        )
+      )
+      .catch(ex =>
+        console.log(
+          `${groupNameFormat}%c${label}%cREJECTED`,
+          ...groupLabelStyle,
+          `color:${currentColor.backgroundColor};`,
+          'color: darkred;',
+          ex
+        )
+      );
+  };
+
+  return _nicerLog;
 }
