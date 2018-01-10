@@ -1,9 +1,5 @@
-function isNicerLogImport(path, t) {
-  return (
-    path.node.source.value === 'nicer-log' &&
-    path.node.specifiers.length === 1 &&
-    t.isImportDefaultSpecifier(path.node.specifiers[0])
-  );
+function isNicerLogImport(path) {
+  return path.node.source.value === 'nicer-log';
 }
 
 export default function(babel) {
@@ -16,8 +12,14 @@ export default function(babel) {
     },
     visitor: {
       ImportDeclaration(path) {
-        if (isNicerLogImport(path, t)) {
-          this.defaultColorfulConsoleExportName = path.node.specifiers[0].local.name;
+        if (isNicerLogImport(path)) {
+          for (const specifier of path.node.specifiers) {
+            if (t.isImportDefaultSpecifier(specifier)) {
+              this.defaultColorfulConsoleExportName = specifier.local.name;
+            } else {
+              this.functionsToBeStripped.push(specifier.local.name);
+            }
+          }
           path.remove();
         }
       },

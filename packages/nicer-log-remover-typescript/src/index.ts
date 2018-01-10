@@ -26,6 +26,12 @@ const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.Transform
     if (isNicerLogImport(node)) {
       if (node.importClause && node.importClause.name) {
         defaultColorfulConsoleExportName = node.importClause.name.text;
+        if (node.importClause.namedBindings && ts.isNamedImports(node.importClause.namedBindings)) {
+          // Remove `setNicerLogBlacklist` and `setNicerLogWhitelist`
+          for (const element of node.importClause.namedBindings.elements) {
+            functionsToBeStripped.push(element.name.text);
+          }
+        }
       }
       return removeNode(node);
     } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
