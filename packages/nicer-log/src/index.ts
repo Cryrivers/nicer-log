@@ -95,6 +95,10 @@ const PALETTE: ColorPalette[] = [
 const PALETTE_LENGTH = PALETTE.length;
 const groupColorMap: GroupColorMap = {};
 
+let _logEverUsed = false;
+let _whitelist: string[];
+let _blacklist: string[];
+
 function hashString(str: string): number {
   // tslint:disable:no-bitwise
   let hash = 0;
@@ -113,7 +117,7 @@ function hashString(str: string): number {
 export interface NicerLog {
   /**
    * @description
-   * Blablabla
+   * Outputs a message to the Web Console.
    */
   (message?: any, ...optionalParams: any[]): void;
   async(label: string, promise: Promise<any>): void;
@@ -152,14 +156,39 @@ function getAsyncDescriptionLabelStyle(currentColor: ColorPalette) {
   return `color: ${backgroundColor.isDark() ? currentColor.backgroundColor : currentColor.textColor}; margin: 0 4px;`;
 }
 
+export function setNicerLogBlacklist(blacklist: string[]) {
+  if (_logEverUsed) {
+    throw new Error('NicerLog: Cannot set blacklist any more if any log instance has been created.');
+  }
+  if (typeof _blacklist !== 'undefined') {
+    throw new Error('NicerLog: setNicerLogBlacklist cannot be called more than once.');
+  }
+  _blacklist = blacklist;
+}
+
+export function setNicerLogWhitelist(whitelist: string[]) {
+  if (_logEverUsed) {
+    throw new Error('NicerLog: Cannot set whitelist any more if any log instance has been created.');
+  }
+  if (typeof _whitelist !== 'undefined') {
+    throw new Error('NicerLog: setNicerLogWhitelist cannot be called more than once.');
+  }
+  _whitelist = whitelist;
+}
+
 export default function nicerLog(groupName: string): NicerLog {
+  // If any log instance has been created, mark the flag to true
+  // and do not allow to set black and white list any more
+  _logEverUsed = true;
+
   const currentColor = generateCurrentColor(groupName);
   const groupNameFormat = formatGroupName(groupName);
   const groupLabelStyle = getGroupLabelStyle(currentColor);
+  const shouldDisplayLogInConsole = (!_whitelist || _whitelist.indexOf(groupName) > -1) && (!_blacklist || _blacklist.indexOf(groupName) === -1);
 
-  const _nicerLog = console.log.bind(console, groupNameFormat, ...groupLabelStyle);
+  const _nicerLog = shouldDisplayLogInConsole ? console.log.bind(console, groupNameFormat, ...groupLabelStyle) : () => undefined;
 
-  _nicerLog.async = (label: string, promise: Promise<any>) => {
+  _nicerLog.async = shouldDisplayLogInConsole ? (label: string, promise: Promise<any>) => {
     logWithoutSource(
       `${groupNameFormat}%cPENDING%c${label}`,
       ...groupLabelStyle,
@@ -186,7 +215,7 @@ export default function nicerLog(groupName: string): NicerLog {
         );
         throw ex;
       });
-  };
+  } : () => undefined;
 
   return _nicerLog;
 }
