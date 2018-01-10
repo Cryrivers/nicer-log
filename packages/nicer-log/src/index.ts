@@ -173,7 +173,7 @@ export default function nicerLog(groupName: string): NicerLog {
           ...groupLabelStyle,
           getAsyncStatusLabelStyle('green'),
           getAsyncDescriptionLabelStyle(currentColor),
-          ret
+          ...(ret ? ['\n\n', ret, '\n\n'] : [])
         )
       )
       .catch(ex => {
@@ -182,7 +182,7 @@ export default function nicerLog(groupName: string): NicerLog {
           ...groupLabelStyle,
           getAsyncStatusLabelStyle('red'),
           getAsyncDescriptionLabelStyle(currentColor),
-          ex
+          ...(ex ? ['\n\n', ex, '\n\n'] : [])
         );
         throw ex;
       });
