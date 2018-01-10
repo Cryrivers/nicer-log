@@ -33,6 +33,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/qunit": "^2.0.31",
+    "@types/tinycolor2": "^1.4.0",
     "ember-cli": "^2.18.0",
     "libkit": "^0.5.18",
     "prettier": "^1.9.2",
@@ -41,5 +42,7 @@
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "tinycolor2": "^1.4.1"
+  }
 }

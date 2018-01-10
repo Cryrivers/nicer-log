@@ -1,3 +1,5 @@
+import * as TinyColor from 'tinycolor2';
+
 interface ColorPalette {
   backgroundColor: string;
   textColor: string;
@@ -117,48 +119,73 @@ export interface NicerLog {
   async(label: string, promise: Promise<any>): void;
 }
 
-export default function nicerLog(groupName: string): NicerLog {
-  let currentColor: ColorPalette;
-  if (!groupColorMap[groupName]) {
-    const chosenColor = PALETTE[hashString(groupName) % PALETTE_LENGTH];
-    groupColorMap[groupName] = currentColor = chosenColor;
-  } else {
-    currentColor = groupColorMap[groupName];
-  }
-  const groupNameFormat = `%c[%c${groupName}%c]`;
+function logWithoutSource(...params: any[]) {
+  setTimeout(console.log.bind(console, ...params));
+}
+
+function formatGroupName(groupName: string) {
+  return `%c[%c${groupName}%c]`;
+}
+
+function getGroupLabelStyle(currentColor: ColorPalette) {
   const bracketStyle = `color: ${currentColor.backgroundColor}; background: ${
     currentColor.backgroundColor
   }; padding: 2px 0;`;
   const textStyle = `color: ${currentColor.textColor}; background: ${currentColor.backgroundColor}; padding: 2px 0;`;
-  const groupLabelStyle = [bracketStyle, textStyle, bracketStyle];
+  return [bracketStyle, textStyle, bracketStyle];
+}
+
+function generateCurrentColor(groupName: string): ColorPalette {
+  if (!groupColorMap[groupName]) {
+    const chosenColor = PALETTE[hashString(groupName) % PALETTE_LENGTH];
+    groupColorMap[groupName] = chosenColor;
+  }
+  return groupColorMap[groupName];
+}
+
+function getAsyncStatusLabelStyle(colorString: string) {
+  return `border: 1px solid ${colorString}; color: ${colorString}; padding: 1px 4px; font-weight: bold; margin-left: 2px;`;
+}
+
+function getAsyncDescriptionLabelStyle(currentColor: ColorPalette) {
+  const backgroundColor = TinyColor(currentColor.backgroundColor);
+  return `color: ${backgroundColor.isDark() ? currentColor.backgroundColor : currentColor.textColor}; margin: 0 4px;`;
+}
+
+export default function nicerLog(groupName: string): NicerLog {
+  const currentColor = generateCurrentColor(groupName);
+  const groupNameFormat = formatGroupName(groupName);
+  const groupLabelStyle = getGroupLabelStyle(currentColor);
+
   const _nicerLog = console.log.bind(console, groupNameFormat, ...groupLabelStyle);
 
   _nicerLog.async = (label: string, promise: Promise<any>) => {
-    console.log(
-      `${groupNameFormat}%c${label}%cPENDING`,
+    logWithoutSource(
+      `${groupNameFormat}%cPENDING%c${label}`,
       ...groupLabelStyle,
-      `color: ${currentColor.backgroundColor};`,
-      `color: blue;`
+      getAsyncStatusLabelStyle('blue'),
+      getAsyncDescriptionLabelStyle(currentColor)
     );
     promise
       .then(ret =>
-        console.log(
-          `${groupNameFormat}%c${label}%cFULFILLED`,
+        logWithoutSource(
+          `${groupNameFormat}%cFULFILLED%c${label}`,
           ...groupLabelStyle,
-          `color:${currentColor.backgroundColor};`,
-          'color: green;',
+          getAsyncStatusLabelStyle('green'),
+          getAsyncDescriptionLabelStyle(currentColor),
           ret
         )
       )
-      .catch(ex =>
-        console.log(
-          `${groupNameFormat}%c${label}%cREJECTED`,
+      .catch(ex => {
+        logWithoutSource(
+          `${groupNameFormat}%cREJECTED%c${label}`,
           ...groupLabelStyle,
-          `color:${currentColor.backgroundColor};`,
-          'color: darkred;',
+          getAsyncStatusLabelStyle('red'),
+          getAsyncDescriptionLabelStyle(currentColor),
           ex
-        )
-      );
+        );
+        throw ex;
+      });
   };
 
   return _nicerLog;
