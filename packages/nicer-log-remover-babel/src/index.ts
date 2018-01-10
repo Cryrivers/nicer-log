@@ -26,6 +26,10 @@ export default function(babel) {
           if (this.functionsToBeStripped.includes(path.node.callee.name)) {
             path.remove();
           }
+        } else if (t.isMemberExpression(path.node.callee) && t.isIdentifier(path.node.callee.object)) {
+          if (this.functionsToBeStripped.includes(path.node.callee.object.name)) {
+            path.remove();
+          }
         }
       },
       VariableDeclaration(path) {

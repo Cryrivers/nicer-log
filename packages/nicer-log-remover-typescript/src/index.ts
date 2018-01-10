@@ -29,7 +29,13 @@ const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.Transform
       }
       return removeNode(node);
     } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+      // Remove `log('blablabla');
       if (functionsToBeStripped.includes(node.expression.text)) {
+        return removeNode(node);
+      }
+    } else if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && ts.isIdentifier(node.expression.expression)) {
+      // Remove `log.async('blablabla');
+      if (functionsToBeStripped.includes(node.expression.expression.text)) {
         return removeNode(node);
       }
     } else if (ts.isVariableStatement(node)) {
