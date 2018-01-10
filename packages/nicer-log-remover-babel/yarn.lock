@@ -25,7 +25,7 @@
     "@types/babel-types" "*"
     "@types/babylon" "*"
 
-"@types/babel-traverse@*":
+"@types/babel-traverse@*", "@types/babel-traverse@^6.25.3":
   version "6.25.3"
   resolved "https://registry.yarnpkg.com/@types/babel-traverse/-/babel-traverse-6.25.3.tgz#34dd69d1e469aee75e20ba00fbc52c7bc717b1c8"
   dependencies:

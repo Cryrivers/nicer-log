@@ -20,12 +20,13 @@ function removeNode(node: ts.Node): ts.EmptyStatement {
 }
 
 const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.TransformationContext) => {
-  let defaultColorfulConsoleExportName: string = '';
+  let defaultNicerLogExport: string = '';
   const functionsToBeStripped: string[] = [];
+
   const visitor: ts.Visitor = node => {
     if (isNicerLogImport(node)) {
       if (node.importClause && node.importClause.name) {
-        defaultColorfulConsoleExportName = node.importClause.name.text;
+        defaultNicerLogExport = node.importClause.name.text;
         if (node.importClause.namedBindings && ts.isNamedImports(node.importClause.namedBindings)) {
           // Remove `setNicerLogBlacklist` and `setNicerLogWhitelist`
           for (const element of node.importClause.namedBindings.elements) {
@@ -52,7 +53,7 @@ const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.Transform
           ts.isCallExpression(subnode.initializer) &&
           ts.isIdentifier(subnode.initializer.expression)
         ) {
-          if (subnode.initializer.expression.text === defaultColorfulConsoleExportName) {
+          if (subnode.initializer.expression.text === defaultNicerLogExport) {
             if (ts.isIdentifier(subnode.name)) {
               functionsToBeStripped.push(subnode.name.text);
             }
