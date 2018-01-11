@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - "node"
+env:
+  - TEST_DIR=packages/nicer-log-remover-babel
+  - TEST_DIR=packages/nicer-log-remover-typescript
+script: cd $TEST_DIR && yarn install && yarn test
+cache: yarn
