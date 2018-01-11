@@ -103,4 +103,4 @@ module.exports = {
 
 ## License
 
-[MIT License](LICENSE.md) ©️ [Zhongliang Wang](https://cryrivers.com)
+[MIT License](LICENSE.md) © [Zhongliang Wang](https://cryrivers.com)
