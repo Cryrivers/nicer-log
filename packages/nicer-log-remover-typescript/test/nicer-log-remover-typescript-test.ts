@@ -1,4 +1,4 @@
-import nicerLogTypeScriptRemover from 'nicer-log-typescript-remover';
+import nicerLogTypeScriptRemover from 'nicer-log-remover-typescript';
 import * as ts from 'typescript';
 
 QUnit.module('nicer-log-remover-typescript tests');

@@ -3,7 +3,7 @@
 const path = require('path');
 
 module.exports = {
-  name: 'nicer-log-typescript-remover',
+  name: 'nicer-log-remover-typescript',
 
   setupPreprocessorRegistry(type, registry) {
     if (type === 'self') {

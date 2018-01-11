@@ -38,12 +38,12 @@ const transformer: ts.TransformerFactory<ts.SourceFile> = context => {
       return removeNode(node);
     } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
       // Remove `log('blablabla');
-      if (functionsToBeStripped.includes(node.expression.text)) {
+      if (functionsToBeStripped.indexOf(node.expression.text) > -1) {
         return removeNode(node);
       }
     } else if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && ts.isIdentifier(node.expression.expression)) {
       // Remove `log.async('blablabla');
-      if (functionsToBeStripped.includes(node.expression.expression.text)) {
+      if (functionsToBeStripped.indexOf(node.expression.expression.text) > -1) {
         return removeNode(node);
       }
     } else if (ts.isVariableStatement(node)) {
