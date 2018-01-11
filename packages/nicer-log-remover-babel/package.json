@@ -1,6 +1,6 @@
 {
   "name": "nicer-log-remover-babel",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "A Babel plugin to remove usages of nicer-log in production build.",
   "main": "dist/commonjs/src/index.js",
   "module": "dist/modules/src/index.js",
@@ -42,6 +42,5 @@
     "shelljs": "^0.7.8",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
-  },
-  "dependencies": {}
+  }
 }

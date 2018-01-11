@@ -1,6 +1,6 @@
 {
   "name": "nicer-log-remover-typescript",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "A TypeScript transformer to remove usages of nicer-log in production build.",
   "main": "dist/commonjs/src/index.js",
   "module": "dist/modules/src/index.js",
@@ -40,6 +40,5 @@
     "shelljs": "^0.7.8",
     "tslint": "^5.9.1",
     "typescript": "^2.6.2"
-  },
-  "dependencies": {}
+  }
 }
