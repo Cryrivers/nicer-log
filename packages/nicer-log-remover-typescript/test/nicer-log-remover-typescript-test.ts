@@ -1,7 +1,7 @@
 import nicerLogTypeScriptRemover from 'nicer-log-typescript-remover';
 import * as ts from 'typescript';
 
-QUnit.module('nicer-log-remover-test tests');
+QUnit.module('nicer-log-remover-typescript tests');
 
 const exampleSourceCode = `
 import nicerLog, { setNicerLogWhitelist as setWhitelist, setNicerLogBlacklist } from 'nicer-log';
