@@ -15,11 +15,12 @@ function isNicerLogImport(node: ts.Node): node is ts.ImportDeclaration {
   return false;
 }
 
-function removeNode(node: ts.Node): ts.EmptyStatement {
+// @ts-ignore
+function removeNode(node: ts.Node) {
   return ts.createEmptyStatement();
 }
 
-const transformer: ts.TransformerFactory<ts.SourceFile> = (context: ts.TransformationContext) => {
+const transformer: ts.TransformerFactory<ts.SourceFile> = context => {
   let defaultNicerLogExport: string = '';
   const functionsToBeStripped: string[] = [];
 
