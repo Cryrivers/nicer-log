@@ -1,6 +1,6 @@
 {
   "name": "nicer-log",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A nicer log for frontend development.",
   "main": "dist/commonjs/src/index.js",
   "module": "dist/modules/src/index.js",
