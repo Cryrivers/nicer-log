@@ -1430,6 +1430,10 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
+easy-crc32@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/easy-crc32/-/easy-crc32-0.0.2.tgz#56e1ce570976ca839010f1394bd8f314563b264d"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"

@@ -1,3 +1,4 @@
+import crc32 from 'easy-crc32';
 import * as TinyColor from 'tinycolor2';
 
 interface ColorPalette {
@@ -99,21 +100,6 @@ let _logEverUsed = false;
 let _whitelist: string[];
 let _blacklist: string[];
 
-function hashString(str: string): number {
-  // tslint:disable:no-bitwise
-  let hash = 0;
-  if (str.length === 0) {
-    return hash;
-  } else {
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash = hash | 0;
-    }
-    return Math.abs(hash);
-  }
-}
-
 export interface NicerLog {
   /**
    * @description
@@ -141,7 +127,7 @@ function getGroupLabelStyle(currentColor: ColorPalette) {
 
 function generateCurrentColor(groupName: string): ColorPalette {
   if (!groupColorMap[groupName]) {
-    const chosenColor = PALETTE[hashString(groupName) % PALETTE_LENGTH];
+    const chosenColor = PALETTE[crc32.calculate(groupName) % PALETTE_LENGTH];
     groupColorMap[groupName] = chosenColor;
   }
   return groupColorMap[groupName];
