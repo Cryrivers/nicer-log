@@ -38,6 +38,9 @@ log.async("Fetching user info", promise);
 
 ### Filter logs
 
+Just use built-in filter features to temporarily filter logs.
+<br /><img src="https://raw.githubusercontent.com/Cryrivers/nicer-log/master/media/filter.gif" width="689" height="434">
+
 ### Setup whitelist or blacklist
 
 ```js
