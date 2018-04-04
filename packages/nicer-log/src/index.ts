@@ -1,4 +1,4 @@
-import crc32 from 'easy-crc32';
+import * as crc32 from 'easy-crc32';
 import * as TinyColor from 'tinycolor2';
 
 interface ColorPalette {
