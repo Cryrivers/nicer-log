@@ -106,7 +106,7 @@ export interface NicerLog {
    * Outputs a message to the Web Console.
    */
   (message?: any, ...optionalParams: any[]): void;
-  async(label: string, promise: Promise<any>): void;
+  async(label: string, promise: Promise<any>, ...additionalInfo: any[]): void;
 }
 
 function logWithoutSource(...params: any[]) {
