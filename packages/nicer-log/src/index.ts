@@ -174,12 +174,13 @@ export default function nicerLog(groupName: string): NicerLog {
 
   const _nicerLog = shouldDisplayLogInConsole ? console.log.bind(console, groupNameFormat, ...groupLabelStyle) : () => undefined;
 
-  _nicerLog.async = shouldDisplayLogInConsole ? (label: string, promise: Promise<any>) => {
+  _nicerLog.async = shouldDisplayLogInConsole ? (label: string, promise: Promise<any>, ...additionalInfo: any[]) => {
     logWithoutSource(
       `${groupNameFormat}%cPENDING%c${label}`,
       ...groupLabelStyle,
       getAsyncStatusLabelStyle('blue'),
-      getAsyncDescriptionLabelStyle(currentColor)
+      getAsyncDescriptionLabelStyle(currentColor),
+      ...additionalInfo
     );
     promise
       .then(ret =>
