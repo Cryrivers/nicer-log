@@ -10,6 +10,24 @@ interface GroupColorMap {
   [key: string]: ColorPalette;
 }
 
+export const enum LabelColor {
+  NAVY,
+  BLUE,
+  AQUA,
+  TEAL,
+  OLIVE,
+  GREEN,
+  LIME,
+  YELLOW,
+  ORANGE,
+  RED,
+  MAROON,
+  FUCHSIA,
+  BLACK,
+  GRAY,
+  SILVER
+}
+
 const PALETTE: ColorPalette[] = [
   // Navy
   {
@@ -162,12 +180,12 @@ export function setNicerLogWhitelist(whitelist: string[]) {
   _whitelist = whitelist;
 }
 
-export default function nicerLog(groupName: string): NicerLog {
+export default function nicerLog(groupName: string, labelColor?: LabelColor): NicerLog {
   // If any log instance has been created, mark the flag to true
   // and do not allow to set black and white list any more
   _logEverUsed = true;
 
-  const currentColor = generateCurrentColor(groupName);
+  const currentColor: ColorPalette = labelColor ? PALETTE[labelColor] : generateCurrentColor(groupName);
   const groupNameFormat = formatGroupName(groupName);
   const groupLabelStyle = getGroupLabelStyle(currentColor);
   const shouldDisplayLogInConsole = (!_whitelist || _whitelist.indexOf(groupName) > -1) && (!_blacklist || _blacklist.indexOf(groupName) === -1);
