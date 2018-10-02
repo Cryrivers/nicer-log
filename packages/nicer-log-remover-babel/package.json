@@ -14,7 +14,7 @@
   "scripts": {
     "problems": "node ./scripts/problems.js",
     "preversion": "npm run test",
-    "prepack": "ember build -prod",
+    "prepare": "ember build -prod",
     "build": "ember build -prod",
     "build-tests": "ember build",
     "pretest": "npm run problems",
@@ -32,15 +32,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/babel-core": "^6.25.3",
-    "@types/babel-traverse": "^6.25.3",
-    "@types/qunit": "^2.0.31",
-    "babel-core": "^6.26.0",
-    "ember-cli": "^2.18.0",
-    "libkit": "^0.5.18",
-    "qunitjs": "^2.4.1",
-    "shelljs": "^0.7.8",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
+    "@types/babel-core": "^6.25.5",
+    "@types/babel-traverse": "^6.25.4",
+    "@types/qunit": "^2.5.3",
+    "babel-core": "^6.26.3",
+    "ember-cli": "^3.4.3",
+    "libkit": "^0.7.0-beta.2",
+    "qunit": "^2.6.2",
+    "shelljs": "^0.8.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.1"
+  },
+  "dependencies": {
+    "ts-std": "^0.7.0"
   }
 }

@@ -3,7 +3,7 @@
 const path = require('path');
 
 module.exports = {
-  name: 'nicer-log-babel-remover',
+  name: 'nicer-log-remover-babel',
 
   setupPreprocessorRegistry(type, registry) {
     if (type === 'self') {
