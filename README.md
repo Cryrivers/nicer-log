@@ -2,11 +2,11 @@
 
 > A nicer replacement of `console.log`.
 
-* Prints log with color group labels
-* Logs the status of Promises or asynchronous functions
-* Filters logs in Developer Tools, OR
-* Filters logs by whitelist / blacklist
-* Can be removed completely in production by using Babel/TypeScript transformers
+- Prints log with color group labels
+- Logs the status of Promises or asynchronous functions
+- Filters logs in Developer Tools, OR
+- Filters logs by whitelist / blacklist
+- Can be removed completely in production by using Babel/TypeScript transformers
 
 ## Install
 
@@ -66,7 +66,7 @@ Edit your `.babelrc` to enable the plugin
 
 ```json
 {
-  "plugins": ["nicer-log-remover-babel"]
+  "plugins": ["module:nicer-log-remover-babel"]
 }
 ```
 
