@@ -1,6 +1,8 @@
 # Nicer-log [![Build Status](https://travis-ci.org/Cryrivers/nicer-log.svg?branch=master)](https://travis-ci.org/Cryrivers/nicer-log) [![npm version](https://badge.fury.io/js/nicer-log.svg)](https://badge.fury.io/js/nicer-log)
 
-> A nicer replacement of `console.log`. Used by Shopee ISFE Team and Shopee React Native Team.
+> A nicer replacement of `console.log`.
+
+Used by **Shopee ISFE Team** and **Shopee React Native Team**.
 
 - Prints log with color group labels
 - Logs the status of Promises or asynchronous functions
